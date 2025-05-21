@@ -3,6 +3,33 @@
 ##
 ## Get latest from https://github.com/github/gitignore/blob/main/VisualStudio.gitignore
 
+# React / Frontend specific
+/client/build
+/client/node_modules
+/client/.env
+/client/.env.local
+/client/.env.development.local
+/client/.env.test.local
+/client/.env.production.local
+
+# Frontend dependency logs
+/client/npm-debug.log*
+/client/yarn-debug.log*
+/client/yarn-error.log*
+
+# Frontend testing
+/client/coverage
+
+# Frontend build artifacts
+/client/.next/
+/client/out/
+/client/dist/
+/client/build/
+
+# Frontend tooling
+.eslintcache
+.stylelintcache
+
 # User-specific files
 *.rsuser
 *.suo
@@ -291,7 +318,29 @@ FakesAssemblies/
 
 # Node.js Tools for Visual Studio
 .ntvs_analysis.dat
-node_modules/
+**/node_modules
+**/node_modules/
+
+# NPM/Yarn lock files (optional, but often good to commit these)
+# package-lock.json
+# yarn.lock
+
+# Environment files
+**/.env*
+!**/.env.example
+
+# Debugging logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.pnpm-debug.log*
+
+# Local development
+.DS_Store
+.idea/
+.vscode/
+*.swp
+*.swo
 
 # Visual Studio 6 build log
 *.plg
