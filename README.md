@@ -1,7 +1,7 @@
 # Reactivities
 ## A .NET 9 API + React (Vite) application
 
-Full-stack web application using:
+Full-stack web application using a CQRS and Mediator patterns and includes the following:
 
 - **Backend**: .NET 9 Web API
 - **Frontend**: React with Vite
