@@ -12,10 +12,16 @@ namespace API.Controllers;
 public class ActivitiesController() : BaseApiController
 {
 	[HttpGet]
+
 	public async Task<ActionResult<List<Activity>>> GetActivities()
 	{
 		return await Mediator.Send(new GetActivitiesList.Query());
 	}
+	// How to test the cancellation token
+	// public async Task<ActionResult<List<Activity>>> GetActivities(CancellationToken ct)
+	// {
+	// 	return await Mediator.Send(new GetActivitiesList.Query(), ct);
+	// }
 
 
 	[HttpGet("{id}")]
