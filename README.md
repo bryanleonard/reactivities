@@ -3,8 +3,8 @@
 
 Full-stack web application using a CQRS and Mediator patterns and includes the following:
 
-- **Backend**: .NET 9 Web API
-- **Frontend**: React with Vite
+- **Backend**: [.NET 9](https://dotnet.microsoft.com/en-us/) Web API
+- **Frontend**: [React](https://react.dev) with [Vite](https://vite.dev) and [Material UI](https://mui.com)
 - **Domain Layer**: Core domain models
 - **Persistence Layer**: Database context and migrations
 
@@ -15,7 +15,7 @@ Full-stack web application using a CQRS and Mediator patterns and includes the f
 ```
 /
 ├── API          # ASP.NET Core Web API (entry point)
-├── Client       # React app built with Vite
+├── Client       # React app built with Vite and Material UI
 ├── Domain       # Domain entities and core business logic
 └── Persistence  # EF Core DbContext and database migrations
 ```
