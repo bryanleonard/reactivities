@@ -1,42 +1,87 @@
-import { Box, Container, CssBaseline } from '@mui/material';
-import { useState, useEffect } from 'react';
-import axios from 'axios';
-import NavBar from './NavBar';
-import ActivityDashboard from '../../features/activities/dashboard/ActivityDashboard';
-
+import { Box, Container, CssBaseline } from "@mui/material";
+import { useState, useEffect } from "react";
+import axios from "axios";
+import NavBar from "./NavBar";
+import ActivityDashboard from "../../features/activities/dashboard/ActivityDashboard";
 
 function App() {
-  const [activities, setActivities] = useState<Activity[]>([])
+	const [activities, setActivities] = useState<Activity[]>([]);
+	const [selectedActivity, setSelectedActivity] = useState<
+		Activity | undefined
+	>(undefined);
+	const [editMode, setEditMode] = useState(false);
 
-  // useEffect(() => {
-  //   fetch('https://localhost:5001/api/activities')
-  //   .then(res => res.json())
-  //   .then(data => setActivities(data))
-  //   return () => {}
-  // }, [])
+	// useEffect(() => {
+	//   fetch('https://localhost:5001/api/activities')
+	//   .then(res => res.json())
+	//   .then(data => setActivities(data))
+	//   return () => {}
+	// }, [])
 
-  useEffect(() => {
-     axios.get<Activity[]>('https://localhost:5001/api/activities')
-     .then(res => setActivities(res.data))
+	useEffect(() => {
+		axios
+			.get<Activity[]>("https://localhost:5001/api/activities")
+			.then((res) => setActivities(res.data));
 
-     return () => {}
-  }, [])
- 
+		return () => {};
+	}, []);
 
-  return (
-    <Box sx={{bgcolor: '#eeeeee'}}>
-      <CssBaseline />
-      <NavBar />
+	const handleSelectActivity = (id: string) => {
+		setSelectedActivity(activities.find((x) => x.id === id));
+	};
 
-      <Container maxWidth='xl' sx={{mt: 3, mb: 4}}>
+	const handleCancelSelectActivity = () => {
+		setSelectedActivity(undefined);
+	};
 
-        <ActivityDashboard activities={activities} />
+	const handleOpenForm = (id?: string) => {
+		if (id) handleSelectActivity(id);
+		else handleCancelSelectActivity();
+		setEditMode(true);
+	};
 
-      </Container>
+	const handleFormClose = () => {
+		setEditMode(false);
+	};
 
-      
-    </Box>
-  )
+	const handleSubmitForm = (activity: Activity) => {
+		const tempId = Date.now().toString();
+		if (activity.id) {
+			setActivities(
+				activities.map((itm) => (itm.id === activity.id ? activity : itm))
+			);
+		} else {
+			const newActivity = { ...activity, id: tempId };
+			setSelectedActivity(newActivity);
+			setActivities([...activities, newActivity]);
+		}
+		setEditMode(false);
+	};
+
+	const handleDelete = (id: string) => {
+		setActivities(activities.filter((itm) => itm.id !== id));
+	};
+
+	return (
+		<Box sx={{ bgcolor: "#eeeeee" }}>
+			<CssBaseline />
+			<NavBar openForm={handleOpenForm} />
+
+			<Container maxWidth="xl" sx={{ mt: 3, pb: 6 }}>
+				<ActivityDashboard
+					activities={activities}
+					selectActivity={handleSelectActivity}
+					cancelSelectActivity={handleCancelSelectActivity}
+					selectedActivity={selectedActivity}
+					editMode={editMode}
+					openForm={handleOpenForm}
+					closeForm={handleFormClose}
+					submitForm={handleSubmitForm}
+					deleteActivity={handleDelete}
+				/>
+			</Container>
+		</Box>
+	);
 }
 
-export default App
+export default App;
